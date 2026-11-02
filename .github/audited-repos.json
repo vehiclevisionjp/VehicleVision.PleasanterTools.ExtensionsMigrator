@@ -1,0 +1,149 @@
+{
+  "owner": "vehiclevisionjp",
+  "template": "VehicleVision.PleasanterTools.Template",
+  "excludedRepositories": {
+    "VehicleVision.PleasanterTools.Overview": "製品一覧のため、アプリの共通設定とは別管理",
+    "VehicleVision.PleasanterTools.Manual": "利用者向けマニュアルのため、アプリの共通設定とは別管理"
+  },
+  "allowedExtraLabels": [
+    ".NET", "dependencies", "github_actions", "javascript", "nuget", "npm",
+    "bug", "documentation", "duplicate", "enhancement", "good first issue",
+    "help wanted", "invalid", "question", "wontfix"
+  ],
+  "commonFiles": [
+    ".github/workflows/patch-updates.yml",
+    ".github/workflows/patch-updates-sync.yml",
+    ".github/workflows/patch-release.yml",
+    ".github/workflows/pr-issue-link-check.yml",
+    ".github/workflows/pr-title-wip-check.yml",
+    ".github/workflows/dependency-review.yml",
+    ".editorconfig",
+    "Directory.Build.props",
+    "scripts/apply-patch-updates.mjs",
+    "scripts/sync-reference.sh"
+  ],
+  "licenseFiles": [
+    "LICENSING.md",
+    "LICENSE-COMMERCIAL.md",
+    "CLA.md",
+    ".github/ISSUE_TEMPLATE/cla.yml",
+    ".github/cla/signed.yml",
+    "CONTRIBUTING.md",
+    "NOTICE",
+    ".github/workflows/cla-check.yml"
+  ],
+  "repositories": [
+    {
+      "name": "VehicleVision.PleasanterTools.AtomFeed",
+      "omitChecks": ["instructions"],
+      "visibility": "public",
+      "includeCodeQL": true,
+      "extraChecks": ["frontend", "license-check", "notice-consistency", "integration", "e2e / pleasanter", "e2e / saml"],
+      "notApplicableFiles": {}
+    },
+    {
+      "name": "VehicleVision.PleasanterTools.CalendarFeed",
+      "omitChecks": ["instructions"],
+      "visibility": "public",
+      "includeCodeQL": true,
+      "extraChecks": ["frontend", "license-check", "notice-consistency", "integration", "e2e / pleasanter", "e2e / saml"],
+      "notApplicableFiles": {}
+    },
+    {
+      "name": "VehicleVision.PleasanterTools.CalendarStyleCreator",
+      "visibility": "public",
+      "includeCodeQL": true,
+      "extraChecks": ["notice-consistency"],
+      "notApplicableFiles": {
+        ".github/workflows/patch-release.yml": "Release が下書き止まりで、自動のパッチリリースに向かない"
+      }
+    },
+    {
+      "name": "VehicleVision.PleasanterTools.IdentityProvider",
+      "omitChecks": ["instructions"],
+      "visibility": "public",
+      "includeCodeQL": true,
+      "extraChecks": ["frontend", "license-check", "notice-consistency", "integration"],
+      "notApplicableFiles": {}
+    },
+    {
+      "name": "VehicleVision.PleasanterTools.IndexCreator",
+      "visibility": "public",
+      "includeCodeQL": true,
+      "extraChecks": ["notice-consistency"],
+      "notApplicableFiles": {
+        ".github/workflows/patch-release.yml": "release-run.yml を持たない"
+      }
+    },
+    {
+      "name": "VehicleVision.PleasanterTools.McpOAuthWrapper",
+      "visibility": "public",
+      "includeCodeQL": true,
+      "extraChecks": [],
+      "notApplicableFiles": {}
+    },
+    {
+      "name": "VehicleVision.PleasanterTools.Questionnaire",
+      "omitChecks": ["instructions"],
+      "visibility": "public",
+      "includeCodeQL": true,
+      "extraChecks": ["frontend", "license-check", "notice-consistency", "integration", "e2e"],
+      "notApplicableFiles": {}
+    },
+    {
+      "name": "VehicleVision.PleasanterTools.Core",
+      "omitChecks": ["instructions", "npm-audit"],
+      "visibility": "public",
+      "includeCodeQL": true,
+      "extraChecks": ["sdk-consistency", "instructions-sync", "notice-consistency", "integration"],
+      "notApplicableFiles": {
+        ".github/workflows/patch-release.yml": "プレリリース版を配布し、release-run.yml を持たない"
+      }
+    },
+    {
+      "name": "VehicleVision.PleasanterTools.BinaryMigrator",
+      "visibility": "public",
+      "includeCodeQL": true,
+      "extraChecks": [],
+      "notApplicableFiles": {}
+    },
+    {
+      "name": "VehicleVision.PleasanterTools.DatabaseConverter",
+      "visibility": "public",
+      "includeCodeQL": true,
+      "extraChecks": ["integration"],
+      "notApplicableFiles": {}
+    },
+    {
+      "name": "VehicleVision.PleasanterTools.DotNetClient",
+      "licenseTier": "triple",
+      "visibility": "public",
+      "includeCodeQL": true,
+      "extraChecks": [],
+      "notApplicableFiles": {
+        ".github/workflows/patch-release.yml": "nuget.org への公開は取り消せないため、自動のパッチリリースにしない"
+      }
+    },
+    {
+      "name": "VehicleVision.PleasanterTools.FeedIngest",
+      "visibility": "public",
+      "includeCodeQL": true,
+      "extraChecks": [],
+      "notApplicableFiles": {}
+    },
+    {
+      "name": "VehicleVision.PleasanterTools.MailIngest",
+      "visibility": "public",
+      "includeCodeQL": true,
+      "extraChecks": [],
+      "notApplicableFiles": {}
+    },
+    {
+      "name": "VehicleVision.PleasanterTools.Template",
+      "visibility": "internal",
+      "includeCodeQL": false,
+      "extraChecks": [],
+      "notApplicableFiles": {}
+    }
+  ]
+}

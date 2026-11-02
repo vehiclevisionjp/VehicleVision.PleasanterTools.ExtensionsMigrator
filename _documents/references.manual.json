@@ -1,0 +1,53 @@
+[
+  {
+    "path": "resources/official/Implem.Pleasanter",
+    "url": "https://github.com/Implem/Implem.Pleasanter.git",
+    "branch": "main"
+  },
+  {
+    "path": "resources/research/VehicleVision.ResearchDocuments.Pleasanter",
+    "url": "https://github.com/vehiclevisionjp/VehicleVision.ResearchDocuments.Pleasanter.git",
+    "branch": "main"
+  },
+  {
+    "path": "resources/tools/VehicleVision.PleasanterTools.Questionnaire",
+    "url": "https://github.com/vehiclevisionjp/VehicleVision.PleasanterTools.Questionnaire.git",
+    "branch": "master"
+  },
+  {
+    "path": "resources/tools/VehicleVision.PleasanterTools.McpOAuthWrapper",
+    "url": "https://github.com/vehiclevisionjp/VehicleVision.PleasanterTools.McpOAuthWrapper.git",
+    "branch": "master"
+  },
+  {
+    "path": "resources/tools/VehicleVision.PleasanterTools.IndexCreator",
+    "url": "https://github.com/vehiclevisionjp/VehicleVision.PleasanterTools.IndexCreator.git",
+    "branch": "master"
+  },
+  {
+    "path": "resources/official/Implem.Pleasanter.UiThemesPreflight",
+    "url": "https://github.com/Implem/Implem.Pleasanter.UiThemesPreflight.git",
+    "branch": "main"
+  },
+  {
+    "path": "resources/blogs/Qiita.Article",
+    "url": "https://github.com/pmc-ko/Qiita.Article.git",
+    "branch": "main",
+    "private": true
+  },
+  {
+    "path": "resources/tools/VehicleVision.PleasanterTools.CalendarFeed",
+    "url": "https://github.com/vehiclevisionjp/VehicleVision.PleasanterTools.CalendarFeed.git",
+    "branch": "master"
+  },
+  {
+    "path": "resources/tools/VehicleVision.PleasanterTools.IdentityProvider",
+    "url": "https://github.com/vehiclevisionjp/VehicleVision.PleasanterTools.IdentityProvider.git",
+    "branch": "master"
+  },
+  {
+    "path": "resources/tools/VehicleVision.PleasanterTools.Core",
+    "url": "https://github.com/vehiclevisionjp/VehicleVision.PleasanterTools.Core.git",
+    "branch": "master"
+  }
+]

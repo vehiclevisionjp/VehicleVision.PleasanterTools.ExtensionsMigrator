@@ -1,0 +1,37 @@
+<Project>
+  <!--
+    ランタイム・言語は Pleasanter 本体に揃える（本体の global.json は SDK 10.0.100 / net10.0）。
+    Pleasanter 側は Nullable=disable だが、本ツールは新規実装で本体コードを取り込まないため enable とする。
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- .editorconfig の IDE 規則（{} の省略禁止など）を、ビルドで強制する -->
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <NuGetAudit>true</NuGetAudit>
+    <NuGetAuditMode>all</NuGetAuditMode>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <!-- バージョンの単一情報源。各 .csproj へ個別に書かないこと。1.0.0 未満は互換を保証しない。 -->
+  <PropertyGroup>
+    <VersionPrefix>0.1.0</VersionPrefix>
+  </PropertyGroup>
+
+  <!--
+    既定はデュアルライセンス（AGPL-3.0-or-later OR 商用）。LICENSING.md を参照する。
+    NuGet の PackageLicenseExpression は LicenseRef-* を含む式を受け付けないため、式は持たない。
+    NuGet パッケージを公開する場合は、PackageLicenseFile で LICENSING.md を指し、
+    パッケージへ含める（_documents/ライセンス.md）。
+  -->
+  <PropertyGroup>
+    <Company>PMC Co., Ltd. IT Solution Div.</Company>
+    <Authors>PMC Co., Ltd. IT Solution Div.</Authors>
+    <Copyright>Copyright (C) PMC Co., Ltd. IT Solution Div.</Copyright>
+    <RepositoryUrl>https://github.com/vehiclevisionjp/VehicleVision.PleasanterTools.Template</RepositoryUrl>
+  </PropertyGroup>
+</Project>
