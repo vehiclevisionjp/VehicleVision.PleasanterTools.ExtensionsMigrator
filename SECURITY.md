@@ -1,6 +1,6 @@
 # セキュリティポリシー
 
-VehicleVision.PleasanterTools.Template の脆弱性の報告方法です。
+VehicleVision.PleasanterTools.ExtensionsMigrator の脆弱性の報告方法です。
 
 ## 脆弱性の報告
 
@@ -10,7 +10,7 @@ VehicleVision.PleasanterTools.Template の脆弱性の報告方法です。
 1. **GitHub の非公開の脆弱性報告（推奨）**:
    リポジトリの「Security」タブから「Report a vulnerability」を選びます。
 2. **メール**: <group.development+gh.pt.template@vehiclevision.jp>
-   件名にリポジトリ名（VehicleVision.PleasanterTools.Template）を入れてください。
+   件名にリポジトリ名（VehicleVision.PleasanterTools.ExtensionsMigrator）を入れてください。
 
 報告には、次の情報があると調査が早く進みます。
 

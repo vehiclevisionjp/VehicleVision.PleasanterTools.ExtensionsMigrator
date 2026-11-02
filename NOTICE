@@ -1,4 +1,4 @@
-VehicleVision.PleasanterTools.Template
+VehicleVision.PleasanterTools.ExtensionsMigrator
 Copyright (C) PMC Co., Ltd. IT Solution Div.
 SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-PMC-Commercial
 
@@ -9,10 +9,10 @@ VehicleVision.PleasanterTools.IndexCreator
 いずれも vehiclevisionjp のリポジトリ（AGPL-3.0-or-later と商用のデュアルライセンス、または AGPL-3.0-or-later 単独）。
 参照日: 2026-10-12
 
-参照専用サブモジュール:
+参照専用ソース（Git では追跡せず、必要時に取得する）:
 Implem.Pleasanter / Implem Inc. / GNU AGPL v3
 https://github.com/Implem/Implem.Pleasanter
-サブモジュール内の LICENSE を参照。成果物には含めない。
+取得したソース内の LICENSE を参照。成果物には含めない。
 
 ランタイム:
 .NET — MIT

@@ -1,35 +1,69 @@
-# VehicleVision.PleasanterTools.Template
+# VehicleVision.PleasanterTools.ExtensionsMigrator
 
-Pleasanter 向けツールを作るときの、社内用テンプレートリポジトリです。標準 Web API を叩く別アプリとして、C#／.NET 10 で作ります。
+Pleasanter の拡張機能を、**ファイルで管理する形から Extensions テーブル（Extensions API）へ移す**ためのコマンドラインツールです。
+`App_Data/Parameters/` 配下の `ExtendedScripts`・`ExtendedStyles`・`ExtendedHtmls`・`ExtendedSqls`・`ExtendedServerScripts`・`ExtendedNavigationMenus` を読み、
+設定の意味を保ったまま、無効状態で登録し、読み戻して照合し、確認できたものだけをファイルから外して DB 側を有効にします。
 
-## 含まれるもの
+> **このツールは設計の段階で、まだ動くものがありません。**
+> 実装は Issue に沿って小さく進めています。現在の状態は [現在の状態](#現在の状態) にあります。
+> 実機の Pleasanter に対する動作確認も、まだ行っていません（確認したことだけを、確認した版とともに書きます）。
+> 仕様と事実確認の結果、未決定の事項は [アーキテクチャ方針](_documents/アーキテクチャ方針.md) にあります。
 
-- 最小の Pleasanter API クライアント（`src/VehicleVision.PleasanterTools.Template.Core`）
-- 接続確認の CLI（`src/VehicleVision.PleasanterTools.Template.Cli`）
-- 単体テスト（`tests/`）
-- AI の事実確認用に Pleasanter 本体ソースを必要時だけ取得する仕組み（本体は Git 管理外）
-- CI、CodeQL、依存の脆弱性検査、リリース（`.github/workflows/`）
-- AI エージェント向けの共通指示（`.github/copilot-instructions.md`、`AGENTS.md`、`CLAUDE.md`）
+## 何をするか（計画）
 
-## 使い方
+| コマンド | 役割 | 書き込み先 |
+| --- | --- | --- |
+| `inventory` | 読み込まれるファイルを棚卸しし、移行・再生成置換・保持・要確認に分類する | 出力先のファイルだけ |
+| `validate` | 変換結果・依存・ハッシュ・対象範囲・台帳を検査する | 出力先のファイルだけ |
+| `plan` | ソースと対象 API の差分・競合・保持・実行単位を確定する | 出力先のファイルだけ |
+| `register` | 無効状態で登録し、読み戻して照合する | Extensions API |
+| `apply` | 対象ファイルを探索範囲外へ退避し、DB 側を有効にして再反映する | ソースと API |
+| `verify` | 台帳・ファイル・API・反映の状態を確認する | 出力先のファイルだけ |
+| `resume` | 途中の状態と結果不明の操作を照合して再開する | 明示した段階だけ |
+| `rollback` | 記録した ID とバックアップで、機能単位に元へ戻す | ソースと API |
 
-接続確認の CLI を動かすには、接続先を環境変数で渡します。
+`plan` 以外の変更を伴うコマンドは、確認した plan の ID・ハッシュと journal を指定して実行します。
+確認していない plan へ黙って適用しません。
 
-```bash
-export PLEASANTER_BASE_URL=https://pleasanter.example.com
-export PLEASANTER_API_KEY=...
-dotnet run --project src/VehicleVision.PleasanterTools.Template.Cli -- check
-```
+## 大事な前提
 
-新しいツールの作り方は [開発ガイド](_documents/開発ガイド.md) を参照してください。
+- **元の設定の意味を変えません。** 名前・Description・無効状態・適用条件・未知の設定を維持します。名前を自動で変えません
+- **ファイルと DB は共存します。** 同じ名前でも置き換えにならず、両方が読み込まれます。二重に読み込まないよう、退避と有効化の順序を plan に示します
+- **移行後に元ファイルが無いのは正常な状態です。** 「ファイルが無いから DB のレコードを消す」動きはしません
+- **「対象外」「保持」「削除」は別の状態です。** 出力でも区別します
+- 対象の DB は API の背後にあります。通常の処理は SQL Server 固有の SQL や DB への直接接続に依存しません
+- API キーは、引数の履歴・設定ファイル・plan・journal へ保存しません（環境変数などから読みます）
+- Pleasanter のパラメーター再読込は、通常ログイン（Cookie 認証）と特権ユーザーが要り、API キーだけでは行えると仮定しません。
+  手動で反映する場合の状態（`AwaitingReload`）を持ちます
+
+## 現在の状態
+
+| 項目 | 状態 |
+| --- | --- |
+| 接続確認の CLI（`check`） | 雛形のまま（Extensions API 用ではない） |
+| `inventory` / `validate` / `plan` | 未実装 |
+| `register` / `resume` / `apply` / `verify` / `rollback` | 未実装 |
+| Azure（Kudu）のソース | 未実装（最初はローカルのファイルだけを扱う予定） |
+| 実機の Pleasanter での確認 | なし |
+
+進み具合と順序は GitHub の Issue（親の Issue にまとめています）を見てください。
+
+## 対応する Pleasanter の版
+
+設計は Pleasanter 1.5.9.1 の公式ソース（`664c833b144d9da9b6bb58e60f7e48eb01141e58`）を読んで確認した読み込み規則に基づきます。
+実機での確認はまだです。対応する版を増やすときは、同じ規則が成り立つかを比べます。
 
 ## ライセンス
 
-既定は **AGPL-3.0-or-later と商用ライセンスのデュアルライセンス**です。詳細は [ライセンスについて](LICENSING.md) を参照してください。
+**AGPL-3.0-or-later と商用ライセンスのデュアルライセンス**です。詳細は [ライセンスについて](LICENSING.md) を参照してください。
 
 | | ライセンス | 想定する利用 |
 | --- | --- | --- |
 | A | [GNU AGPL v3 以降](LICENSE) | オープンソースとして利用・改変・再配布する場合 |
 | B | [株式会社ピー・エム・シー ITソリューション事業部の商用ライセンス](LICENSE-COMMERCIAL.md) | AGPL の義務を負わずに利用したい場合（個別契約） |
 
-この雛形から作るリポジトリも、この提供条件で始まります。作るときの確認事項は [ライセンス](_documents/ライセンス.md) を参照してください。依存のライセンスは [NOTICE](NOTICE) にあります。
+貢献には [CLA](CLA.md) への署名が要ります（[貢献のしかた](CONTRIBUTING.md)）。依存のライセンスは [NOTICE](NOTICE) にあります。
+
+## 開発する人へ
+
+ビルド・テスト・CI・規約は [開発ガイド](_documents/開発ガイド.md) と [開発運用](_documents/開発運用.md) を参照してください。

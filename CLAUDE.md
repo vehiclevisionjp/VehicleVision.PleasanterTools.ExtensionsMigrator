@@ -14,4 +14,4 @@ Manual・Overview の参照も非追跡とし、private の取得は実行者本
 文書には確認したコミット SHA・ソースへのリンク・参照日を残す。
 正式な編集元は `.github/copilot-instructions.md`。
 
-外部記憶は、個別のリポジトリを作らず、Internal の `VehicleVision.PleasanterTools.ClaudeMemory` に `<ツール名>/` フォルダを作って管理する。現時点ではフォルダを作っていない。
+外部記憶は、個別のリポジトリを作らず、Internal の `VehicleVision.PleasanterTools.ClaudeMemory` に `ExtensionsMigrator/` フォルダを作って管理する。現時点ではフォルダを作っていない。

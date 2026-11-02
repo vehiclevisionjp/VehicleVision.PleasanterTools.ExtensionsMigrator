@@ -1,6 +1,6 @@
 # 商用ライセンス（LicenseRef-PMC-Commercial）
 
-対象ソフトウェアは **VehicleVision.PleasanterTools.Template**
+対象ソフトウェアは **VehicleVision.PleasanterTools.ExtensionsMigrator**
 
 Copyright (C) PMC Co., Ltd. IT Solution Div.
 

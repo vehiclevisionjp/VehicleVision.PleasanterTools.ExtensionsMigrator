@@ -32,6 +32,6 @@
     <Company>PMC Co., Ltd. IT Solution Div.</Company>
     <Authors>PMC Co., Ltd. IT Solution Div.</Authors>
     <Copyright>Copyright (C) PMC Co., Ltd. IT Solution Div.</Copyright>
-    <RepositoryUrl>https://github.com/vehiclevisionjp/VehicleVision.PleasanterTools.Template</RepositoryUrl>
+    <RepositoryUrl>https://github.com/vehiclevisionjp/VehicleVision.PleasanterTools.ExtensionsMigrator</RepositoryUrl>
   </PropertyGroup>
 </Project>

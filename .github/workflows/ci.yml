@@ -68,6 +68,3 @@ jobs:
       - run: bash scripts/sync-agents.sh --check
       - run: bash scripts/reference-isolation-check.sh
       - run: bash scripts/test-sync-reference.sh
-      - name: 監査の比較ロジックを固定入力で検証する
-        shell: pwsh
-        run: ./scripts/Test-RepoAuditLogic.ps1

@@ -1,6 +1,6 @@
 # 行動規範
 
-VehicleVision.PleasanterTools.Template の行動規範です。
+VehicleVision.PleasanterTools.ExtensionsMigrator の行動規範です。
 このドキュメントは、[Contributor Covenant][covenant] 2.1 日本語版（CC BY 4.0）を基に、
 このプロジェクト向けに調整した翻案です。
 
