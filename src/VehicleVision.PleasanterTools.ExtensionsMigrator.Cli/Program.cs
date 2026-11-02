@@ -1,23 +1,31 @@
-using VehicleVision.PleasanterTools.ExtensionsMigrator.Core;
+using VehicleVision.PleasanterTools.ExtensionsMigrator.Core.Cli;
 
-// 接続確認だけを行う最小の CLI。ツールの実体はここへ足す。
-// 接続先は環境変数 PLEASANTER_BASE_URL / PLEASANTER_API_KEY で渡す。
-if (args.Length != 1 || args[0] != "check")
+var app = new CommandLineApp(
+[
+    new CheckCommand(() => new HttpClient()),
+    new NotImplementedCommand("inventory", "List the extension files and classify them."),
+    new NotImplementedCommand("validate", "Validate the conversion, hashes and scope."),
+    new NotImplementedCommand("plan", "Create a read-only plan against the target API."),
+]);
+
+using var cancellation = new CancellationTokenSource();
+Console.CancelKeyPress += (_, e) =>
 {
-    Console.Error.WriteLine("Usage: VehicleVision.PleasanterTools.ExtensionsMigrator check");
-    return 2;
-}
+    e.Cancel = true;
+    cancellation.Cancel();
+};
 
 try
 {
-    using var httpClient = new HttpClient();
-    var client = new PleasanterApiClient(httpClient, PleasanterOptions.FromEnvironment());
-    var connected = await client.CheckConnectionAsync();
-    Console.WriteLine(connected ? "Connected." : "Connection failed.");
-    return connected ? 0 : 1;
+    return await app.RunAsync(
+        args,
+        Console.Out,
+        Console.Error,
+        Environment.GetEnvironmentVariable,
+        cancellation.Token);
 }
-catch (InvalidOperationException ex)
+catch (OperationCanceledException)
 {
-    Console.Error.WriteLine(ex.Message);
-    return 2;
+    Console.Error.WriteLine("Canceled.");
+    return ExitCodes.Failure;
 }

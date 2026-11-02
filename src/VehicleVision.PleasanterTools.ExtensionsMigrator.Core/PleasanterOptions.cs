@@ -32,16 +32,22 @@ public sealed class PleasanterOptions
     public TimeSpan Timeout { get; init; } = DefaultTimeout;
 
     /// <summary>環境変数 <c>PLEASANTER_BASE_URL</c> / <c>PLEASANTER_API_KEY</c> から作る。</summary>
-    public static PleasanterOptions FromEnvironment() => new()
+    public static PleasanterOptions FromEnvironment() => FromEnvironment(Environment.GetEnvironmentVariable);
+
+    /// <summary>環境変数の読み出しを差し替えて作る。</summary>
+    public static PleasanterOptions FromEnvironment(Func<string, string?> getEnvironmentVariable) => new()
     {
-        BaseUrl = Required("PLEASANTER_BASE_URL"),
-        ApiKey = Required("PLEASANTER_API_KEY"),
+        BaseUrl = Required(getEnvironmentVariable, "PLEASANTER_BASE_URL"),
+        ApiKey = Required(getEnvironmentVariable, "PLEASANTER_API_KEY"),
     };
 
-    private static string Required(string name) =>
-        Environment.GetEnvironmentVariable(name) is { Length: > 0 } value
+    /// <summary>API キーを含めない。ログや例外へ誤って出さないため。</summary>
+    public override string ToString() => $"PleasanterOptions {{ BaseUrl = {BaseUrl}, ApiKey = *** }}";
+
+    private static string Required(Func<string, string?> getEnvironmentVariable, string name) =>
+        getEnvironmentVariable(name) is { Length: > 0 } value
             ? value
-            : throw new InvalidOperationException($"環境変数 {name} が設定されていません。");
+            : throw new InvalidOperationException($"Environment variable {name} is not set.");
 }
 
 /// <summary>固定した Pleasanter 接続設定を返す。</summary>
