@@ -26,6 +26,13 @@ public sealed class CheckCommand(Func<HttpClient> httpClientFactory) : ICommand
             return ExitCodes.UsageError;
         }
 
+        var urlProblem = Target.TargetUrl.Validate(options.BaseUrl);
+        if (urlProblem is not null)
+        {
+            context.Error.WriteLine(urlProblem);
+            return ExitCodes.UsageError;
+        }
+
         using var httpClient = httpClientFactory();
         var client = new PleasanterApiClient(httpClient, options);
         var connected = await client.CheckConnectionAsync(cancellationToken).ConfigureAwait(false);

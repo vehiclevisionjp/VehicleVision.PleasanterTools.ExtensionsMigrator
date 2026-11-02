@@ -63,6 +63,21 @@ extensions-migrator validate  --source <Parameters のフォルダ> [--inventory
 }
 ```
 
+### `plan`（対象 API との照合。読み取りだけ）
+
+```bash
+export PLEASANTER_BASE_URL=https://pleasanter.example.com
+export PLEASANTER_API_KEY=...   # 環境変数でだけ渡す（引数・設定・plan・ログには残りません）
+extensions-migrator plan --source <Parameters のフォルダ> --tenant-id <テナント ID> [--ledger ledger.json] [--rules rules.json] --out plan.json
+```
+
+- 対象 API には `Get` だけを送ります（作成・更新・削除はしません）。接続先は HTTPS だけ（ローカルの検証環境の HTTP を除く）。リダイレクトは辿りません
+- 設定ごとの予定: `CreateDisabled`（対象に無いので無効状態で作る予定）・`InSync`・`Retain`（保持・対象外・置換。対象には何もしない）・`Conflict`・`Blocked`（要確認）
+- 台帳（`--ledger`）に無い既存レコードは、同じ内容・同じ名前でも自動では上書きせず `Conflict` にします。対象にしか無いレコードは数えるだけで、削除の対象にはしません
+- 他のテナントのレコードは照合に使わず、件数だけ出します。`--tenant-id` は必須です
+- 台帳が壊れている（チェックサム不一致・途切れ・別のソースのもの）ときは、空の台帳として扱わず、終了コード 1 で止まります
+- plan の ID は内容から決まります（作成日時を含みません）。本文は埋め込まず、ハッシュだけです
+
 ## 現在の状態
 
 | 項目 | 状態 |
@@ -70,7 +85,7 @@ extensions-migrator validate  --source <Parameters のフォルダ> [--inventory
 | コマンドの入口・引数の解析・終了コード | あり（`check` と、未実装コマンドの案内だけ） |
 | 接続確認（`check`） | 雛形のまま（Extensions API 用ではない。実機では未確認） |
 | `inventory` / `validate` | 実装済み（ローカルのファイルだけ。合成データの単体テストで確認。実機の Pleasanter では未確認） |
-| `plan` | 未実装（対象 API との照合が要る） |
+| `plan`（対象 API の `Get` と台帳の照合） | 実装済み（スタブの API と合成データの単体テストで確認。実機の Pleasanter では未確認） |
 | `register` / `resume` / `apply` / `verify` / `rollback` | 未実装 |
 | Azure（Kudu）のソース | 未実装（最初はローカルのファイルだけを扱う予定） |
 | 実機の Pleasanter での確認 | なし |
