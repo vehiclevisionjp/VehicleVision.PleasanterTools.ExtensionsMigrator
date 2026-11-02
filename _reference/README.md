@@ -114,11 +114,11 @@ Git の認証エラー本文は表示せず、取得失敗と認証・接続・b
 
 ### private の認証と実例の参照元
 
-`pmc-ko/Qiita.Article` は private。Manual 用実例の `private: true` は取得権限を付与する指定ではない。
+`private: true` は取得権限を付与する指定ではない。
 取得する人が `gh auth login` でログインするか、Git の資格情報を設定する。
 設定済みの Git credential helper を優先し、GitHub の private では `gh auth token --hostname github.com`
 を実行時だけ credential helper 内で使える。トークンを URL・コマンド引数・ログ・Git 設定へ保存しない。
-bot の App は使わず、取得不能の内容や記事本文は文書へ補わない。
+bot の App は使わず、取得不能の内容は文書へ補わない。
 
 2026-10-26 に各ローカル作業ツリーの `.gitmodules` を読み、HEAD の定義と一致することを確認した。
 配布時は対象の最新定義を再確認する。
