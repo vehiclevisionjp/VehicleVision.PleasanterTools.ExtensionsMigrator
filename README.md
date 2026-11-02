@@ -40,7 +40,8 @@ Pleasanter の拡張機能を、**ファイルで管理する形から Extension
 
 | 項目 | 状態 |
 | --- | --- |
-| 接続確認の CLI（`check`） | 雛形のまま（Extensions API 用ではない） |
+| コマンドの入口・引数の解析・終了コード | あり（`check` と、未実装コマンドの案内だけ） |
+| 接続確認（`check`） | 雛形のまま（Extensions API 用ではない。実機では未確認） |
 | `inventory` / `validate` / `plan` | 未実装 |
 | `register` / `resume` / `apply` / `verify` / `rollback` | 未実装 |
 | Azure（Kudu）のソース | 未実装（最初はローカルのファイルだけを扱う予定） |
