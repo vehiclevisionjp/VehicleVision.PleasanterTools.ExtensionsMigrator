@@ -44,6 +44,7 @@ Pleasanter の拡張機能を、**ファイルで管理する形から Extension
 | 接続確認（`check`） | 雛形のまま（Extensions API 用ではない。実機では未確認） |
 | `inventory` / `validate` / `plan` | 未実装 |
 | `register` / `resume` / `apply` / `verify` / `rollback` | 未実装 |
+| GUI（Avalonia。試作） | 試作のみ（ウィンドウ・フォルダ選択・合成データの表示。`inventory` との結線はこれから）。実機の確認は Windows での起動だけ。macOS・Linux は未確認 |
 | Azure（Kudu）のソース | 未実装（最初はローカルのファイルだけを扱う予定） |
 | 実機の Pleasanter での確認 | なし |
 

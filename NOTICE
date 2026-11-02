@@ -28,6 +28,16 @@ https://github.com/xunit/visualstudio.xunit/blob/main/License.txt
 coverlet.collector — MIT
 https://github.com/coverlet-coverage/coverlet/blob/master/LICENSE
 
+GUI（試作。#15。配布しない）の直接依存:
+Avalonia / Avalonia.Desktop / Avalonia.Themes.Fluent — MIT
+https://github.com/AvaloniaUI/Avalonia/blob/master/licence.md
+推移的依存 25 件は packages.lock.json に記録する（2026-11-02 に各パッケージのメタデータと同梱のライセンス文で確認）:
+24 件が MIT（Avalonia.*・SkiaSharp・HarfBuzzSharp・各 NativeAssets・Tmds.DBus.Protocol・MicroCom.Runtime など）。
+1 件は Avalonia.Angle.Windows.Natives — ANGLE のライセンス文（BSD 系）。
+Avalonia.BuildServices（MIT）はビルド時に匿名の利用情報を送る。環境変数 AVALONIA_TELEMETRY_OPTOUT=1 で止める（CI と開発手順で設定）。
+配布物を作る前に、SkiaSharp のネイティブの第三者通知・Avalonia の NOTICE・フォントのライセンス文を確認する（Issue #19。未完了）。
+開発者ツール（Avalonia.Diagnostics など）・Accelerate 系・DataGrid・フォントのパッケージは使っていない。
+
 推移的依存と実際の版は各プロジェクトの packages.lock.json に記録する。
 
 開発用（実行環境へ配布しない）:
