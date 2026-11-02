@@ -3,8 +3,8 @@ using VehicleVision.PleasanterTools.ExtensionsMigrator.Core.Cli;
 var app = new CommandLineApp(
 [
     new CheckCommand(() => new HttpClient()),
-    new NotImplementedCommand("inventory", "List the extension files and classify them."),
-    new NotImplementedCommand("validate", "Validate the conversion, hashes and scope."),
+    new InventoryCommand(),
+    new ValidateCommand(),
     new NotImplementedCommand("plan", "Create a read-only plan against the target API."),
 ]);
 

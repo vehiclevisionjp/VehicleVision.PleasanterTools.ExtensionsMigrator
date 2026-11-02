@@ -36,13 +36,41 @@ Pleasanter の拡張機能を、**ファイルで管理する形から Extension
 - Pleasanter のパラメーター再読込は、通常ログイン（Cookie 認証）と特権ユーザーが要り、API キーだけでは行えると仮定しません。
   手動で反映する場合の状態（`AwaitingReload`）を持ちます
 
+## 使い方（`inventory`・`validate`）
+
+どちらも何も書きません（`--out` で指定した出力先だけ）。`--source` には、Pleasanter の `App_Data/Parameters` に相当するフォルダを指定します。
+
+```bash
+extensions-migrator inventory --source <Parameters のフォルダ> --out inventory.json [--source-id <名前>] [--rules rules.json]
+extensions-migrator validate  --source <Parameters のフォルダ> [--inventory inventory.json] [--rules rules.json]
+```
+
+- `Extended*` で始まるフォルダだけを読みます。分類は、移行（`Migrate`）・置換（`Replace`）・保持（`Keep`）・対象外（`Exclude`）・要確認（`NeedsReview`）です
+- 出力の JSON には、本文は入りません（SHA-256 のハッシュだけ）。ソースのフルパスも入りません
+- `--out` をソースのフォルダの中へ指定することはできません。保存は一時ファイルからの置き換えです
+- `validate` は、要確認の設定があるとき、`--inventory` との差（変更・追加・削除）があるときに終了コード 1 を返します。同名・空名は警告です
+- リンクと reparse point は辿らず、要確認にします
+
+保持・対象外・置換は、利用者が JSON の規則で指定します（既定は規則なし。特定の環境の名前を前提にしません）。最初に一致した規則が使われます。
+
+```json
+{
+  "formatVersion": 1,
+  "rules": [
+    { "match": "ExtendedSqls/Sample*.json", "classification": "keep", "reason": "サンプル" },
+    { "match": "ExtendedStyles/generated/**", "classification": "replace", "reason": "再生成して置き換える" }
+  ]
+}
+```
+
 ## 現在の状態
 
 | 項目 | 状態 |
 | --- | --- |
 | コマンドの入口・引数の解析・終了コード | あり（`check` と、未実装コマンドの案内だけ） |
 | 接続確認（`check`） | 雛形のまま（Extensions API 用ではない。実機では未確認） |
-| `inventory` / `validate` / `plan` | 未実装 |
+| `inventory` / `validate` | 実装済み（ローカルのファイルだけ。合成データの単体テストで確認。実機の Pleasanter では未確認） |
+| `plan` | 未実装（対象 API との照合が要る） |
 | `register` / `resume` / `apply` / `verify` / `rollback` | 未実装 |
 | Azure（Kudu）のソース | 未実装（最初はローカルのファイルだけを扱う予定） |
 | 実機の Pleasanter での確認 | なし |
