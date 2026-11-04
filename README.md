@@ -36,13 +36,56 @@ Pleasanter の拡張機能を、**ファイルで管理する形から Extension
 - Pleasanter のパラメーター再読込は、通常ログイン（Cookie 認証）と特権ユーザーが要り、API キーだけでは行えると仮定しません。
   手動で反映する場合の状態（`AwaitingReload`）を持ちます
 
+## 使い方（`inventory`・`validate`）
+
+どちらも何も書きません（`--out` で指定した出力先だけ）。`--source` には、Pleasanter の `App_Data/Parameters` に相当するフォルダを指定します。
+
+```bash
+extensions-migrator inventory --source <Parameters のフォルダ> --out inventory.json [--source-id <名前>] [--rules rules.json]
+extensions-migrator validate  --source <Parameters のフォルダ> [--inventory inventory.json] [--rules rules.json]
+```
+
+- `Extended*` で始まるフォルダだけを読みます。分類は、移行（`Migrate`）・置換（`Replace`）・保持（`Keep`）・対象外（`Exclude`）・要確認（`NeedsReview`）です
+- 出力の JSON には、本文は入りません（SHA-256 のハッシュだけ）。ソースのフルパスも入りません
+- `--out` をソースのフォルダの中へ指定することはできません。保存は一時ファイルからの置き換えです
+- `validate` は、要確認の設定があるとき、`--inventory` との差（変更・追加・削除）があるときに終了コード 1 を返します。同名・空名は警告です
+- リンクと reparse point は辿らず、要確認にします
+
+保持・対象外・置換は、利用者が JSON の規則で指定します（既定は規則なし。特定の環境の名前を前提にしません）。最初に一致した規則が使われます。
+
+```json
+{
+  "formatVersion": 1,
+  "rules": [
+    { "match": "ExtendedSqls/Sample*.json", "classification": "keep", "reason": "サンプル" },
+    { "match": "ExtendedStyles/generated/**", "classification": "replace", "reason": "再生成して置き換える" }
+  ]
+}
+```
+
+### `plan`（対象 API との照合。読み取りだけ）
+
+```bash
+export PLEASANTER_BASE_URL=https://pleasanter.example.com
+export PLEASANTER_API_KEY=...   # 環境変数でだけ渡す（引数・設定・plan・ログには残りません）
+extensions-migrator plan --source <Parameters のフォルダ> --tenant-id <テナント ID> [--ledger ledger.json] [--rules rules.json] --out plan.json
+```
+
+- 対象 API には `Get` だけを送ります（作成・更新・削除はしません）。接続先は HTTPS だけ（ローカルの検証環境の HTTP を除く）。リダイレクトは辿りません
+- 設定ごとの予定: `CreateDisabled`（対象に無いので無効状態で作る予定）・`InSync`・`Retain`（保持・対象外・置換。対象には何もしない）・`Conflict`・`Blocked`（要確認）
+- 台帳（`--ledger`）に無い既存レコードは、同じ内容・同じ名前でも自動では上書きせず `Conflict` にします。対象にしか無いレコードは数えるだけで、削除の対象にはしません
+- 他のテナントのレコードは照合に使わず、件数だけ出します。`--tenant-id` は必須です
+- 台帳が壊れている（チェックサム不一致・途切れ・別のソースのもの）ときは、空の台帳として扱わず、終了コード 1 で止まります
+- plan の ID は内容から決まります（作成日時を含みません）。本文は埋め込まず、ハッシュだけです
+
 ## 現在の状態
 
 | 項目 | 状態 |
 | --- | --- |
 | コマンドの入口・引数の解析・終了コード | あり（`check` と、未実装コマンドの案内だけ） |
 | 接続確認（`check`） | 雛形のまま（Extensions API 用ではない。実機では未確認） |
-| `inventory` / `validate` / `plan` | 未実装 |
+| `inventory` / `validate` | 実装済み（ローカルのファイルだけ。合成データの単体テストで確認。実機の Pleasanter では未確認） |
+| `plan`（対象 API の `Get` と台帳の照合） | 実装済み（スタブの API と合成データの単体テストで確認。実機の Pleasanter では未確認） |
 | `register` / `resume` / `apply` / `verify` / `rollback` | 未実装 |
 | GUI（Avalonia。試作） | 試作のみ（ウィンドウ・フォルダ選択・合成データの表示。`inventory` との結線はこれから）。実機の確認は Windows での起動だけ。macOS・Linux は未確認 |
 | Azure（Kudu）のソース | 未実装（最初はローカルのファイルだけを扱う予定） |
