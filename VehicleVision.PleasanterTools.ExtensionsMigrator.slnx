@@ -2,11 +2,9 @@
   <Folder Name="/src/">
     <Project Path="src/VehicleVision.PleasanterTools.ExtensionsMigrator.Engine/VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.csproj" />
     <Project Path="src/VehicleVision.PleasanterTools.ExtensionsMigrator.Cli/VehicleVision.PleasanterTools.ExtensionsMigrator.Cli.csproj" />
-    <Project Path="src/VehicleVision.PleasanterTools.ExtensionsMigrator.Gui/VehicleVision.PleasanterTools.ExtensionsMigrator.Gui.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Tests/VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Tests.csproj" />
     <Project Path="tests/VehicleVision.PleasanterTools.ExtensionsMigrator.Cli.Tests/VehicleVision.PleasanterTools.ExtensionsMigrator.Cli.Tests.csproj" />
-    <Project Path="tests/VehicleVision.PleasanterTools.ExtensionsMigrator.Gui.Tests/VehicleVision.PleasanterTools.ExtensionsMigrator.Gui.Tests.csproj" />
   </Folder>
 </Solution>

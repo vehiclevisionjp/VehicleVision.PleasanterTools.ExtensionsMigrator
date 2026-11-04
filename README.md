@@ -87,7 +87,6 @@ extensions-migrator plan --source <Parameters のフォルダ> --tenant-id <テ�
 | `inventory` / `validate` | 実装済み（ローカルのファイルだけ。合成データの単体テストで確認。実機の Pleasanter では未確認） |
 | `plan`（対象 API の `Get` と台帳の照合） | 実装済み（スタブの API と合成データの単体テストで確認。実機の Pleasanter では未確認） |
 | `register` / `resume` / `apply` / `verify` / `rollback` | 未実装 |
-| GUI（Avalonia。試作） | 試作のみ（フォルダ選択 → 棚卸し（`inventory` と同じエンジン）→ 一覧と分類ごとの件数。読み取り専用）。実機の確認は Windows での起動だけ。macOS・Linux は未確認 |
 | Azure（Kudu）のソース | 未実装（最初はローカルのファイルだけを扱う予定） |
 | 実機の Pleasanter での確認 | なし |
 
