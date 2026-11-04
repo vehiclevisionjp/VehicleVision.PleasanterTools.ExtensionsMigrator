@@ -1,4 +1,5 @@
 using System.Net;
+using VehicleVision.PleasanterTools.DotNetClient;
 using VehicleVision.PleasanterTools.ExtensionsMigrator.Cli;
 
 namespace VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Tests;
@@ -105,7 +106,7 @@ public sealed class CommandLineAppTests
     [Fact]
     public void PleasanterOptions_の文字列表現は_API_キーを含まない()
     {
-        var options = PleasanterOptions.FromEnvironment(Environment);
+        var options = PleasanterEnvironment.FromEnvironment(Environment);
 
         Assert.DoesNotContain(SecretKey, options.ToString(), StringComparison.Ordinal);
     }

@@ -1,4 +1,5 @@
 using System.Globalization;
+using VehicleVision.PleasanterTools.DotNetClient;
 using VehicleVision.PleasanterTools.ExtensionsMigrator.Engine;
 using VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Inventory;
 using VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Ledger;
@@ -48,7 +49,7 @@ public sealed class PlanCommand(Func<HttpClient> httpClientFactory, TimeProvider
         PleasanterOptions options;
         try
         {
-            options = PleasanterOptions.FromEnvironment(context.GetEnvironmentVariable);
+            options = PleasanterEnvironment.FromEnvironment(context.GetEnvironmentVariable);
         }
         catch (InvalidOperationException ex)
         {
@@ -77,7 +78,7 @@ public sealed class PlanCommand(Func<HttpClient> httpClientFactory, TimeProvider
         }
 
         using var httpClient = httpClientFactory();
-        var listed = await new ExtensionsApiClient(new PleasanterApiClient(httpClient, options))
+        var listed = await new ExtensionsApiClient(new PleasanterGateway(httpClient, options))
             .ListAsync(cancellationToken).ConfigureAwait(false);
         if (!listed.IsSuccess)
         {

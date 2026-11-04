@@ -1,3 +1,4 @@
+using VehicleVision.PleasanterTools.DotNetClient;
 using VehicleVision.PleasanterTools.ExtensionsMigrator.Engine;
 using VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Target;
 namespace VehicleVision.PleasanterTools.ExtensionsMigrator.Cli;
@@ -20,7 +21,7 @@ public sealed class CheckCommand(Func<HttpClient> httpClientFactory) : ICommand
         PleasanterOptions options;
         try
         {
-            options = PleasanterOptions.FromEnvironment(context.GetEnvironmentVariable);
+            options = PleasanterEnvironment.FromEnvironment(context.GetEnvironmentVariable);
         }
         catch (InvalidOperationException ex)
         {
@@ -36,7 +37,7 @@ public sealed class CheckCommand(Func<HttpClient> httpClientFactory) : ICommand
         }
 
         using var httpClient = httpClientFactory();
-        var client = new PleasanterApiClient(httpClient, options);
+        var client = new PleasanterGateway(httpClient, options);
         var connected = await client.CheckConnectionAsync(cancellationToken).ConfigureAwait(false);
         context.Output.WriteLine(connected ? "Connected." : "Connection failed.");
         return connected ? ExitCodes.Success : ExitCodes.Failure;

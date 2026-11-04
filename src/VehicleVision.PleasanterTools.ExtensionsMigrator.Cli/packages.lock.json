@@ -2,8 +2,16 @@
   "version": 1,
   "dependencies": {
     "net10.0": {
+      "VehicleVision.PleasanterTools.DotNetClient": {
+        "type": "Transitive",
+        "resolved": "0.2.0",
+        "contentHash": "s0iBREzBbK3i79Eo15LYZqwDiRTBtw5olqecHbyghr7RYFcGINQDtL31e01kg1gzqfyLaXpztc9wGxBgTfqW8g=="
+      },
       "vehiclevision.pleasantertools.extensionsmigrator.engine": {
-        "type": "Project"
+        "type": "Project",
+        "dependencies": {
+          "VehicleVision.PleasanterTools.DotNetClient": "[0.2.0, )"
+        }
       }
     }
   }
