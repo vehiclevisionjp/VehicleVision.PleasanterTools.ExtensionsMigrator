@@ -25,13 +25,18 @@
   <!--
     既定はデュアルライセンス（AGPL-3.0-or-later OR 商用）。LICENSING.md を参照する。
     NuGet の PackageLicenseExpression は LicenseRef-* を含む式を受け付けないため、式は持たない。
-    NuGet パッケージを公開する場合は、PackageLicenseFile で LICENSING.md を指し、
-    パッケージへ含める（_documents/ライセンス.md）。
+    PackageLicenseFile で LICENSING.md を指し、同梱する文書は CLI の .csproj で指定する
+    （_documents/ライセンス.md、_documents/リリース手順.md）。
   -->
   <PropertyGroup>
     <Company>PMC Co., Ltd. IT Solution Div.</Company>
     <Authors>PMC Co., Ltd. IT Solution Div.</Authors>
     <Copyright>Copyright (C) PMC Co., Ltd. IT Solution Div.</Copyright>
+    <Product>VehicleVision.PleasanterTools.ExtensionsMigrator</Product>
+    <PackageLicenseFile>LICENSING.md</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/vehiclevisionjp/VehicleVision.PleasanterTools.ExtensionsMigrator</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/vehiclevisionjp/VehicleVision.PleasanterTools.ExtensionsMigrator</PackageProjectUrl>
   </PropertyGroup>
 </Project>
