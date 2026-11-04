@@ -1,10 +1,10 @@
 using System.Text;
-using VehicleVision.PleasanterTools.ExtensionsMigrator.Core.Inventory;
+using VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Inventory;
 
 namespace VehicleVision.PleasanterTools.ExtensionsMigrator.Gui;
 
 /// <summary>
-/// デモ用（<c>--smoke</c>・「デモを表示」ボタン）。合成のファイルをメモリ上に置き、実際の棚卸しエンジン（Core）に通す。
+/// デモ用（<c>--smoke</c>・「デモを表示」ボタン）。合成のファイルをメモリ上に置き、実際の棚卸しエンジン（Engine）に通す。
 /// ディスクには何も書かない。実在の環境の内容は入れない。
 /// </summary>
 internal static class DemoInventory

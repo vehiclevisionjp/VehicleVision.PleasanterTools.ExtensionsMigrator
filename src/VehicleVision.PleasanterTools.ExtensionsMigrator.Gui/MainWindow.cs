@@ -4,13 +4,13 @@ using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
-using VehicleVision.PleasanterTools.ExtensionsMigrator.Core.Inventory;
+using VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Inventory;
 
 namespace VehicleVision.PleasanterTools.ExtensionsMigrator.Gui;
 
 /// <summary>
-/// 試作のウィンドウ。フォルダを選ぶと、Core の棚卸し（<c>inventory</c> と同じエンジン）の結果を表示する。
-/// 読み取り専用で、変換・書き込み・API 呼び出しはしない。整形は Core（<see cref="InventoryView"/>）にあり、ここは並べるだけ。
+/// 試作のウィンドウ。フォルダを選ぶと、Engine の棚卸し（<c>inventory</c> と同じエンジン）の結果を表示する。
+/// 読み取り専用で、変換・書き込み・API 呼び出しはしない。整形は Engine（<see cref="InventoryView"/>）にあり、ここは並べるだけ。
 /// </summary>
 internal sealed class MainWindow : Window
 {

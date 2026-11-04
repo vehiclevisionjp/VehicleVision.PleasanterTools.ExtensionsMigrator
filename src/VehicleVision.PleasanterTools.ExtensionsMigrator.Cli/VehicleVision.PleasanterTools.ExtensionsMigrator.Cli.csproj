@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VehicleVision.PleasanterTools.ExtensionsMigrator.Core\VehicleVision.PleasanterTools.ExtensionsMigrator.Core.csproj" />
+    <ProjectReference Include="..\VehicleVision.PleasanterTools.ExtensionsMigrator.Engine\VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-using VehicleVision.PleasanterTools.ExtensionsMigrator.Core.Inventory;
+using VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Inventory;
 
 namespace VehicleVision.PleasanterTools.ExtensionsMigrator.Gui.Tests;
 
