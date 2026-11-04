@@ -1,3 +1,4 @@
+using VehicleVision.PleasanterTools.DotNetClient;
 using VehicleVision.PleasanterTools.ExtensionsMigrator.Cli;
 
 var app = new CommandLineApp(
@@ -30,5 +31,5 @@ catch (OperationCanceledException)
     return ExitCodes.Failure;
 }
 
-// API キーはリクエストのボディに載せるため、リダイレクトは辿らない（別ホストへ漏らさない）
-static HttpClient CreateHttpClient() => new(new HttpClientHandler { AllowAutoRedirect = false });
+// API キーはリクエストのボディに載せるため、リダイレクトは辿らない（別ホストへ漏らさない。DotNetClient の PleasanterHttp: AllowAutoRedirect = false・Cookie 無し）
+static HttpClient CreateHttpClient() => PleasanterHttp.CreateClient();

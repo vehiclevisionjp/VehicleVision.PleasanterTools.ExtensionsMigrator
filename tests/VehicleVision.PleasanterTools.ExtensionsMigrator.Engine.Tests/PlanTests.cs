@@ -2,6 +2,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using VehicleVision.PleasanterTools.DotNetClient;
 using VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Inventory;
 using VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Ledger;
 using VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Plan;
@@ -249,7 +250,7 @@ public sealed class PlanTests : IDisposable
     private static ExtensionsApiClient Api(Func<HttpRequestMessage, HttpResponseMessage> respond, out CountingHandler handler)
     {
         handler = new CountingHandler(respond);
-        return new ExtensionsApiClient(new PleasanterApiClient(new HttpClient(handler), new PleasanterOptions { BaseUrl = Base, ApiKey = Key }));
+        return new ExtensionsApiClient(new PleasanterGateway(new HttpClient(handler), new PleasanterOptions { BaseUrl = Base, ApiKey = Key }));
     }
 
     [Fact]

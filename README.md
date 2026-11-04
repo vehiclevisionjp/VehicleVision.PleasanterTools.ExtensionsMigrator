@@ -83,7 +83,7 @@ export PLEASANTER_API_KEY=...   # 環境変数でだけ渡す（引数・設定�
 extensions-migrator plan --source <Parameters のフォルダ> --tenant-id <テナント ID> [--ledger ledger.json] [--rules rules.json] --out plan.json
 ```
 
-- 対象 API には `Get` だけを送ります（作成・更新・削除はしません）。接続先は HTTPS だけ（ローカルの検証環境の HTTP を除く）。リダイレクトは辿りません
+- 対象 API には `Get` だけを送ります（作成・更新・削除はしません）。接続先は HTTPS だけ（ローカルの検証環境の HTTP を除く）。リダイレクトは辿りません。通信には当社の DotNetClient を使います
 - 設定ごとの予定: `CreateDisabled`（対象に無いので無効状態で作る予定）・`InSync`・`Retain`（保持・対象外・置換。対象には何もしない）・`Conflict`・`Blocked`（要確認）
 - 台帳（`--ledger`）に無い既存レコードは、同じ内容・同じ名前でも自動では上書きせず `Conflict` にします。対象にしか無いレコードは数えるだけで、削除の対象にはしません
 - 他のテナントのレコードは照合に使わず、件数だけ出します。`--tenant-id` は必須です

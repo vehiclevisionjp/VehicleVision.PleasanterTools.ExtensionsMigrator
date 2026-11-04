@@ -1,4 +1,5 @@
 using System.Text.Json.Nodes;
+using VehicleVision.PleasanterTools.DotNetClient;
 using VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Inventory;
 
 namespace VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Target;
@@ -34,21 +35,15 @@ public sealed record ExtensionListResult(
 /// 応答の本文は保持せず、ハッシュだけにする。失敗の理由は固定の文言だけを返し、応答の本文は出さない。
 /// 件数の上限（ページング）の有無は参照ソースの読みでは確認できていないため、返った分をすべて扱う（実機は未確認）。
 /// </remarks>
-public sealed class ExtensionsApiClient(PleasanterApiClient client)
+public sealed class ExtensionsApiClient(PleasanterGateway gateway)
 {
     public async Task<ExtensionListResult> ListAsync(CancellationToken cancellationToken = default)
     {
-        var response = await client.GetExtensionsAsync(cancellationToken).ConfigureAwait(false);
+        // 本文の StatusCode が失敗のときも、ゲートウェイが失敗として分類している
+        var response = await gateway.GetExtensionsAsync(cancellationToken).ConfigureAwait(false);
         if (!response.IsSuccess)
         {
-            return Failure(response.ErrorKind, Describe(response.ErrorKind, response.StatusCode));
-        }
-
-        var apiStatus = response.Body?["StatusCode"]?.GetValue<int?>();
-        if (apiStatus is not null and not 200)
-        {
-            var kind = apiStatus == 401 ? PleasanterErrorKind.Unauthorized : PleasanterErrorKind.Permanent;
-            return Failure(kind, Describe(kind, apiStatus));
+            return Failure(response.ErrorKind, Describe(response.ErrorKind, response.EffectiveStatusCode));
         }
 
         if (response.Body?["Response"]?["Data"] is not JsonArray data)
