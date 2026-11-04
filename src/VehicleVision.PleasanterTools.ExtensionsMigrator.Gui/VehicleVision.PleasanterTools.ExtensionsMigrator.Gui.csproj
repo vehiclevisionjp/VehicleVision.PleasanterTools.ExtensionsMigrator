@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    GUI の試作（Avalonia。MIT）。#15。読み取り専用で、配布しない。
+    開発者ツール（Avalonia.Diagnostics・AvaloniaUI.DiagnosticsSupport）・Accelerate 系・DataGrid・フォントのパッケージは使わない。
+    使うなら Debug 専用の条件付き参照にして、配布物へ入れない（_documents/開発ガイド.md）。
+  -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <IsPackable>false</IsPackable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.5" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.5" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.5" />
+    <!--
+      Avalonia.BuildServices（ビルド時のテレメトリ）は Avalonia が推移的に引く。NuGet は推移的依存を取り除けないため、
+      直接参照にして全アセットを除外する（ビルドのターゲットとタスクが取り込まれず、何も実行されない。#19）。
+    -->
+    <PackageReference Include="Avalonia.BuildServices" Version="11.3.2" ExcludeAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VehicleVision.PleasanterTools.ExtensionsMigrator.Engine\VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="VehicleVision.PleasanterTools.ExtensionsMigrator.Gui.Tests" />
+  </ItemGroup>
+
+</Project>
