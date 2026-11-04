@@ -1,4 +1,4 @@
-using VehicleVision.PleasanterTools.ExtensionsMigrator.Core.Cli;
+using VehicleVision.PleasanterTools.ExtensionsMigrator.Cli;
 
 var app = new CommandLineApp(
 [
