@@ -97,6 +97,9 @@ AGPL の義務（ソースコード開示・コピーレフト）を負わずに
 <!-- license:begin core=off -->
 <!-- license:end core -->
 
+<!-- license:begin dotnetclient=off -->
+<!-- license:end dotnetclient -->
+
 ## 貢献を受け取るとき
 
 **デュアルライセンスを保つには、貢献者からの許諾が要る。**
