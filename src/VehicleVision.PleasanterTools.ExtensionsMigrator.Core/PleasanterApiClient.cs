@@ -93,6 +93,10 @@ public sealed class PleasanterApiClient(
             view is null ? new Dictionary<string, object?>() : new Dictionary<string, object?> { ["View"] = view },
             cancellationToken);
 
+    /// <summary>Extensions API の一覧を取り出す（読み取りだけ）。</summary>
+    public Task<PleasanterResponse> GetExtensionsAsync(CancellationToken cancellationToken = default)
+        => PostAsync("api/extensions/Get", new Dictionary<string, object?>(), cancellationToken);
+
     /// <summary>サイト設定を取り出す。</summary>
     public Task<PleasanterResponse> GetSiteAsync(
         long siteId,

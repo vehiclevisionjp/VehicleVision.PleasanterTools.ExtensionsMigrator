@@ -2,10 +2,10 @@ using VehicleVision.PleasanterTools.ExtensionsMigrator.Core.Cli;
 
 var app = new CommandLineApp(
 [
-    new CheckCommand(() => new HttpClient()),
+    new CheckCommand(CreateHttpClient),
     new InventoryCommand(),
     new ValidateCommand(),
-    new NotImplementedCommand("plan", "Create a read-only plan against the target API."),
+    new PlanCommand(CreateHttpClient),
 ]);
 
 using var cancellation = new CancellationTokenSource();
@@ -29,3 +29,6 @@ catch (OperationCanceledException)
     Console.Error.WriteLine("Canceled.");
     return ExitCodes.Failure;
 }
+
+// API キーはリクエストのボディに載せるため、リダイレクトは辿らない（別ホストへ漏らさない）
+static HttpClient CreateHttpClient() => new(new HttpClientHandler { AllowAutoRedirect = false });
