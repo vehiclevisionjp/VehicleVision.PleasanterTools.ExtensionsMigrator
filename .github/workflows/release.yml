@@ -97,7 +97,8 @@ jobs:
           for required in README.md LICENSING.md LICENSE LICENSE-COMMERCIAL.md NOTICE \
             tools/net10.0/any/DotnetToolSettings.xml \
             tools/net10.0/any/VehicleVision.PleasanterTools.ExtensionsMigrator.dll \
-            tools/net10.0/any/VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.dll; do
+            tools/net10.0/any/VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.dll \
+            tools/net10.0/any/VehicleVision.PleasanterTools.DotNetClient.dll; do
             if ! echo "$entries" | grep -Fxq "$required"; then echo "::error::nupkg に $required がありません"; exit 1; fi
           done
           if echo "$entries" | grep -Eiq '\.pdb$|(^|/)(_reference|\.git|\.env|appsettings\.Local\.json)(/|$)'; then
