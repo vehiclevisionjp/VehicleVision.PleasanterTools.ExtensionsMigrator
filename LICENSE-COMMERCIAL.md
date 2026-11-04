@@ -42,6 +42,9 @@ Copyright (C) PMC Co., Ltd. IT Solution Div.
 <!-- license:begin core-terms=off -->
 <!-- license:end core-terms -->
 
+<!-- license:begin dotnetclient-terms=off -->
+<!-- license:end dotnetclient-terms -->
+
 <!-- license:begin sni-terms=off -->
 <!-- license:end sni-terms -->
 
