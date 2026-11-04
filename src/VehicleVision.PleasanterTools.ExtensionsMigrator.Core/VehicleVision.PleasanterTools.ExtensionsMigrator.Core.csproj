@@ -1,7 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <InternalsVisibleTo Include="VehicleVision.PleasanterTools.ExtensionsMigrator.Core.Tests" />
-  </ItemGroup>
-
-</Project>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- 単独の NuGet パッケージとしては出さない（外部に使われる API を約束しない）。CLI のパッケージに含める -->
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Tests" />
+  </ItemGroup>
+
+</Project>
