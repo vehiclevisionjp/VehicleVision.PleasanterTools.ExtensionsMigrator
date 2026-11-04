@@ -277,12 +277,17 @@
           "xunit.extensibility.core": "[2.9.3]"
         }
       },
+      "vehiclevision.pleasantertools.extensionsmigrator.core": {
+        "type": "Project"
+      },
       "vehiclevision.pleasantertools.extensionsmigrator.gui": {
         "type": "Project",
         "dependencies": {
           "Avalonia": "[12.1.5, )",
+          "Avalonia.BuildServices": "[11.3.2, )",
           "Avalonia.Desktop": "[12.1.5, )",
-          "Avalonia.Themes.Fluent": "[12.1.5, )"
+          "Avalonia.Themes.Fluent": "[12.1.5, )",
+          "VehicleVision.PleasanterTools.ExtensionsMigrator.Core": "[0.1.0, )"
         }
       }
     }

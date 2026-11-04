@@ -31,10 +31,12 @@ https://github.com/coverlet-coverage/coverlet/blob/master/LICENSE
 GUI（試作。#15。配布しない）の直接依存:
 Avalonia / Avalonia.Desktop / Avalonia.Themes.Fluent — MIT
 https://github.com/AvaloniaUI/Avalonia/blob/master/licence.md
-推移的依存 25 件は packages.lock.json に記録する（2026-11-02 に各パッケージのメタデータと同梱のライセンス文で確認）:
-24 件が MIT（Avalonia.*・SkiaSharp・HarfBuzzSharp・各 NativeAssets・Tmds.DBus.Protocol・MicroCom.Runtime など）。
+推移的依存 21 件は packages.lock.json に記録する（2026-11-02 に各パッケージのメタデータと同梱のライセンス文で確認。2026-11-04 にメタデータを再確認）:
+20 件が MIT（Avalonia.*・SkiaSharp・HarfBuzzSharp・各 NativeAssets・Tmds.DBus.Protocol・MicroCom.Runtime など）。
 1 件は Avalonia.Angle.Windows.Natives — ANGLE のライセンス文（BSD 系）。
-Avalonia.BuildServices（MIT）はビルド時に匿名の利用情報を送る。環境変数 AVALONIA_TELEMETRY_OPTOUT=1 で止める（CI と開発手順で設定）。
+Avalonia.BuildServices（MIT）はビルド時に匿名の利用情報を送るパッケージ。Avalonia が推移的に引くため NuGet では取り除けず、
+Gui.csproj で直接参照にして全アセット（build・buildTransitive・tools）を除外している。ビルドのターゲットとタスクは取り込まれず、何も実行されず、何も送られない。
+パッケージのファイルはパッケージのキャッシュに取得されるが、ビルド・実行の成果物には入らない（配布物にも入らない）。
 配布物を作る前に、SkiaSharp のネイティブの第三者通知・Avalonia の NOTICE・フォントのライセンス文を確認する（Issue #19。未完了）。
 開発者ツール（Avalonia.Diagnostics など）・Accelerate 系・DataGrid・フォントのパッケージは使っていない。
 
