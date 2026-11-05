@@ -18,6 +18,7 @@ Pleasanter Web API クライアント（Engine が NuGet で参照し、CLI の�
 VehicleVision.PleasanterTools.DotNetClient 0.2.0 — LGPL-3.0-or-later OR AGPL-3.0-or-later OR 商用（LicenseRef-PMC-Commercial）の 3 層（自社）
 https://github.com/vehiclevisionjp/VehicleVision.PleasanterTools.DotNetClient
 NuGet では PackageLicenseFile で LICENSING.md を表示する（SPDX の式は持たない）。推移的依存は無い（packages.lock.json）。
+DotNetClient の LGPL v3 の全文（LICENSE-LGPL）と、LGPL が参照する GPL v3 の全文（COPYING）を、nupkg と配布 ZIP に同梱する（DotNetClient の LICENSE・COPYING と同じ本文）。
 本リポジトリ（AGPL ＋ 商用のデュアル）の A（AGPL）では DotNetClient も AGPL で、B（商用）では組み込まれた DotNetClient を商用ライセンスに含める。
 VehicleVision.PleasanterTools の各ツールが組み込む場合は、呼び出し元と一体として扱う（LICENSING.md の「例外: 当社の共通部品 DotNetClient」、Template #114・#117）。
 
