@@ -12,7 +12,7 @@ $zipName = "VehicleVision.PleasanterTools.ExtensionsMigrator-$zipVersion-portabl
 if ($Version) { $versionArguments = @("-p:Version=$Version") }
 dotnet publish $project -c Release --no-restore --no-self-contained -p:UseAppHost=false -p:DebugType=None -p:DebugSymbols=false -o $appDirectory @versionArguments
 if ($LASTEXITCODE -ne 0) { throw '配布物の生成に失敗しました。' }
-foreach ($file in @('LICENSE', 'LICENSING.md', 'LICENSE-COMMERCIAL.md', 'NOTICE', 'README.md')) {
+foreach ($file in @('LICENSE', 'LICENSE-LGPL', 'COPYING', 'LICENSING.md', 'LICENSE-COMMERCIAL.md', 'NOTICE', 'README.md')) {
     Copy-Item -LiteralPath (Join-Path $repoRoot $file) -Destination $appDirectory
 }
 Copy-Item -LiteralPath (Join-Path $repoRoot '_documents') -Destination $appDirectory -Recurse

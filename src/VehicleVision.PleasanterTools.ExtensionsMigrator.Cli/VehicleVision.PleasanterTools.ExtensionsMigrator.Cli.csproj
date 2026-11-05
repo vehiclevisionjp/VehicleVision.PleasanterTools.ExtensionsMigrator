@@ -21,10 +21,12 @@
 
   <ItemGroup>
     <!-- PackageLicenseFile（Directory.Build.props）は LICENSING.md を指す。dotnet tool の pack は自動では同梱しないので、ここで明示する（無いと NU5030）。
-         README・ライセンス全文（AGPL・商用）・NOTICE も、パッケージの直下へ同梱する -->
+         README・ライセンス全文（AGPL・商用。組み込む DotNetClient の LGPL v3 と、LGPL が参照する GPL v3）・NOTICE も、パッケージの直下へ同梱する -->
     <None Include="..\..\README.md" Pack="true" PackagePath="" Visible="false" />
     <None Include="..\..\LICENSING.md" Pack="true" PackagePath="" Visible="false" />
     <None Include="..\..\LICENSE" Pack="true" PackagePath="" Visible="false" />
+    <None Include="..\..\LICENSE-LGPL" Pack="true" PackagePath="" Visible="false" />
+    <None Include="..\..\COPYING" Pack="true" PackagePath="" Visible="false" />
     <None Include="..\..\LICENSE-COMMERCIAL.md" Pack="true" PackagePath="" Visible="false" />
     <None Include="..\..\NOTICE" Pack="true" PackagePath="" Visible="false" />
   </ItemGroup>

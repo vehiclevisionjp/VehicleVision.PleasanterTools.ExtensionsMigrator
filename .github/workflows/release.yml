@@ -112,7 +112,7 @@ jobs:
           if [ "$nupkg" != "$expected" ]; then echo "::error::nupkg の名前($nupkg)が期待($expected)と合わない"; exit 1; fi
           entries=$(unzip -Z1 "$nupkg")
           echo "$entries"
-          for required in README.md LICENSING.md LICENSE LICENSE-COMMERCIAL.md NOTICE \
+          for required in README.md LICENSING.md LICENSE LICENSE-LGPL COPYING LICENSE-COMMERCIAL.md NOTICE \
             tools/net10.0/any/DotnetToolSettings.xml \
             tools/net10.0/any/VehicleVision.PleasanterTools.ExtensionsMigrator.dll \
             tools/net10.0/any/VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.dll \
