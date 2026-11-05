@@ -1,6 +1,8 @@
 # ライセンスについて（デュアルライセンス）
 
-<!-- license:begin release=none -->
+<!-- license:begin release=unreleased -->
+> 本ソフトウェアは未リリースです。
+> 最初のリリースは、この提供条件（デュアルライセンス）で出します。
 <!-- license:end release -->
 
 対象ソフトウェアは **VehicleVision.PleasanterTools.ExtensionsMigrator**
