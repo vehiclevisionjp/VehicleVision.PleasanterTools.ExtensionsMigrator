@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <!-- Pleasanter の Web API クライアント。LGPL・AGPL・商用の 3 層（自社。NOTICE・LICENSING.md の「例外: 当社の共通部品 DotNetClient」） -->
-    <PackageReference Include="VehicleVision.PleasanterTools.DotNetClient" Version="0.2.0" />
+    <PackageReference Include="VehicleVision.PleasanterTools.DotNetClient" Version="0.4.0" />
     <InternalsVisibleTo Include="VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Tests" />
   </ItemGroup>
 
