@@ -39,11 +39,11 @@ public sealed class ExtensionsApiClient(PleasanterGateway gateway)
 {
     public async Task<ExtensionListResult> ListAsync(CancellationToken cancellationToken = default)
     {
-        // 本文の StatusCode が失敗のときも、ゲートウェイが失敗として分類している
+        // 本文の StatusCode が失敗のときも、DotNetClient が失敗として返す（0.3.0 以降）
         var response = await gateway.GetExtensionsAsync(cancellationToken).ConfigureAwait(false);
         if (!response.IsSuccess)
         {
-            return Failure(response.ErrorKind, Describe(response.ErrorKind, response.EffectiveStatusCode));
+            return Failure(response.ErrorKind, Describe(response.ErrorKind, response.ApplicationStatusCode ?? response.StatusCode));
         }
 
         if (response.Body?["Response"]?["Data"] is not JsonArray data)

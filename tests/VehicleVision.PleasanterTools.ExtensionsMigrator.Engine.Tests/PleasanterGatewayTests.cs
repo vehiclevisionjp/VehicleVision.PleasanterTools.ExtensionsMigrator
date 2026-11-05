@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 using VehicleVision.PleasanterTools.DotNetClient;
 using VehicleVision.PleasanterTools.DotNetClient.Models;
+using VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Target;
 
 namespace VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.Tests;
 
@@ -18,21 +19,13 @@ public sealed class PleasanterGatewayTests
     };
 
     [Theory]
-    [InlineData(HttpStatusCode.OK, PleasanterErrorKind.None)]
-    [InlineData(HttpStatusCode.Unauthorized, PleasanterErrorKind.Unauthorized)]
-    [InlineData(HttpStatusCode.BadRequest, PleasanterErrorKind.Permanent)]
-    [InlineData(HttpStatusCode.TooManyRequests, PleasanterErrorKind.Transient)]
-    [InlineData(HttpStatusCode.InternalServerError, PleasanterErrorKind.Transient)]
-    public void Classify_は本文の_StatusCode_を扱い方へ分類する(HttpStatusCode status, PleasanterErrorKind expected)
-        => Assert.Equal(expected, PleasanterGateway.Classify(status));
-
-    [Theory]
     [InlineData("""{"StatusCode":200,"Response":{}}""", PleasanterErrorKind.None, 200)]
     [InlineData("""{"StatusCode":401}""", PleasanterErrorKind.Unauthorized, 401)]
     [InlineData("""{"StatusCode":403}""", PleasanterErrorKind.Permanent, 403)]
     [InlineData("""{"StatusCode":429}""", PleasanterErrorKind.Transient, 429)]
     [InlineData("""{"StatusCode":500}""", PleasanterErrorKind.Transient, 500)]
-    [InlineData("""{"StatusCode":"403"}""", PleasanterErrorKind.Permanent, 403)]
+    // 文字列の "403" は DotNetClient 0.3.0 以降は読まない（0.2.0 向けの自前の補いは読んでいた）。Pleasanter は数値で返す
+    [InlineData("""{"StatusCode":"403"}""", PleasanterErrorKind.None, null)]
     [InlineData("""{"Id":1}""", PleasanterErrorKind.None, null)]
     [InlineData("""{"StatusCode":"abc"}""", PleasanterErrorKind.None, null)]
     public async Task HTTP_が_200_でも_本文の_StatusCode_が失敗なら失敗にする(string body, PleasanterErrorKind kind, int? apiStatus)
@@ -42,7 +35,7 @@ public sealed class PleasanterGatewayTests
         var result = await gateway.GetExtensionsAsync();
 
         Assert.Equal(kind, result.ErrorKind);
-        Assert.Equal(apiStatus, result.ApiStatusCode);
+        Assert.Equal(apiStatus, result.ApplicationStatusCode);
         Assert.Equal(200, result.StatusCode);
     }
 
@@ -56,6 +49,39 @@ public sealed class PleasanterGatewayTests
 
         Assert.Equal(PleasanterErrorKind.Transient, result.ErrorKind);
         Assert.Equal(500, result.StatusCode);
+    }
+
+    [Theory]
+    [InlineData(401, PleasanterErrorKind.Unauthorized)]
+    [InlineData(403, PleasanterErrorKind.Permanent)]
+    [InlineData(429, PleasanterErrorKind.Transient)]
+    [InlineData(500, PleasanterErrorKind.Transient)]
+    public async Task 一覧の取得は_HTTP_200_でも本文の_StatusCode_が失敗なら失敗にし_HTTP_のステータスは出さない(int apiStatus, PleasanterErrorKind kind)
+    {
+        var handler = new StubHandler(HttpStatusCode.OK, $$"""{"StatusCode":{{apiStatus}},"Message":"denied-secret-text"}""");
+        var client = new ExtensionsApiClient(new PleasanterGateway(new HttpClient(handler), Options));
+
+        var result = await client.ListAsync();
+
+        Assert.Equal(kind, result.ErrorKind);
+        Assert.False(result.IsSuccess);
+        Assert.Contains(apiStatus.ToString(System.Globalization.CultureInfo.InvariantCulture), result.FailureReason!);
+        Assert.DoesNotContain("denied-secret-text", result.FailureReason!);
+    }
+
+    [Fact]
+    public async Task Retry_After_が付いた失敗でも_再試行せず_1_回だけ呼び_RetryAfter_を保持する()
+    {
+        var handler = new StubHandler(HttpStatusCode.ServiceUnavailable, "{}", retryAfter: "30");
+        var gateway = new PleasanterGateway(new HttpClient(handler), Options);
+
+        var response = await gateway.GetExtensionsAsync();
+        var listed = await new ExtensionsApiClient(gateway).ListAsync();
+
+        Assert.Equal(PleasanterErrorKind.Transient, response.ErrorKind);
+        Assert.Equal(TimeSpan.FromSeconds(30), response.RetryAfter);
+        Assert.Equal(PleasanterErrorKind.Transient, listed.ErrorKind);
+        Assert.Equal(2, handler.Uris.Count);
     }
 
     [Fact]
@@ -100,25 +126,27 @@ public sealed class PleasanterGatewayTests
     }
 
     [Fact]
-    public async Task 型付きの呼び出しの結果も_補う処理を通せる()
+    public async Task 型付きの呼び出しも_本文の_StatusCode_が失敗なら失敗として返る()
     {
         // 将来の Extensions の作成・更新・削除用。版の問い合わせは、接続設定で止める（テストでは通信を増やさない）
         var options = new PleasanterOptions { BaseUrl = Options.BaseUrl, ApiKey = Key, DetectServerVersion = false };
         var handler = new StubHandler(HttpStatusCode.OK, """{"StatusCode":403,"Message":"denied"}""");
         var gateway = new PleasanterGateway(new HttpClient(handler), options);
 
-        var raw = await gateway.Client.Extensions.CreateAsync(new ExtensionApiModel { ExtensionName = "n" });
-        var result = PleasanterGateway.Supplement(raw);
+        var result = await gateway.Client.Extensions.CreateAsync(new ExtensionApiModel { ExtensionName = "n" });
 
-        Assert.True(raw.IsSuccess);
+        Assert.False(result.IsSuccess);
         Assert.Equal(PleasanterErrorKind.Permanent, result.ErrorKind);
+        Assert.Equal(200, result.StatusCode);
+        Assert.Equal(403, result.ApplicationStatusCode);
         Assert.Equal("https://example.invalid/api/Extensions/Create", Assert.Single(handler.Uris));
     }
 
     private sealed class StubHandler(
         HttpStatusCode status = HttpStatusCode.OK,
         string body = "{}",
-        bool throwOnSend = false) : HttpMessageHandler
+        bool throwOnSend = false,
+        string? retryAfter = null) : HttpMessageHandler
     {
         public List<string> Uris { get; } = [];
 
@@ -136,10 +164,16 @@ public sealed class PleasanterGatewayTests
 
             Uris.Add(request.RequestUri!.ToString());
             Bodies.Add(await request.Content!.ReadAsStringAsync(cancellationToken));
-            return new HttpResponseMessage(status)
+            var response = new HttpResponseMessage(status)
             {
                 Content = new StringContent(body, Encoding.UTF8, "application/json"),
             };
+            if (retryAfter is not null)
+            {
+                response.Headers.TryAddWithoutValidation("Retry-After", retryAfter);
+            }
+
+            return response;
         }
     }
 }
