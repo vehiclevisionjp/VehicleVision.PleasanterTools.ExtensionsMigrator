@@ -40,6 +40,18 @@ Pleasanter の拡張機能を、**ファイルで管理する形から Extension
 - Pleasanter のパラメーター再読込は、通常ログイン（Cookie 認証）と特権ユーザーが要り、API キーだけでは行えると仮定しません。
   手動で反映する場合の状態（`AwaitingReload`）を持ちます
 
+## 導入
+
+.NET 10 ランタイム（SDK）が要ります。配布は dotnet tool（NuGet）を予定しています。
+
+> **NuGet へは、まだ公開していません。** 次のコマンドは、公開後に使えるようになる予定の形です（現時点では動きません）。
+> 公開されるまでは、ソースからのビルドが必要です（[開発ガイド](_documents/開発ガイド.md)）。
+
+```bash
+dotnet tool install --global VehicleVision.PleasanterTools.ExtensionsMigrator
+extensions-migrator --help
+```
+
 ## 使い方（`inventory`・`validate`）
 
 どちらも何も書きません（`--out` で指定した出力先だけ）。`--source` には、Pleasanter の `App_Data/Parameters` に相当するフォルダを指定します。

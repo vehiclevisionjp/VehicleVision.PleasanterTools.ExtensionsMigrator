@@ -6,6 +6,29 @@
     <RootNamespace>VehicleVision.PleasanterTools.ExtensionsMigrator.Cli</RootNamespace>
   </PropertyGroup>
 
+  <!--
+    dotnet tool として配布できる形にする（公開は別。手順は _documents/リリース手順.md）。
+    RID 非依存（framework-dependent）の単一パッケージで、.NET 10 ランタイムが前提。
+    Engine は別パッケージにせず、このツールの出力へ含める（Engine は IsPackable=false）。
+  -->
+  <PropertyGroup>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>extensions-migrator</ToolCommandName>
+    <PackageId>VehicleVision.PleasanterTools.ExtensionsMigrator</PackageId>
+    <Description>Pleasanter の拡張機能（Extended*）を、ファイルで管理する形から Extensions テーブル（Extensions API）へ移すコマンドラインツール。</Description>
+    <PackageTags>pleasanter;vehiclevision;extensions;migration;dotnet-tool</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- PackageLicenseFile（Directory.Build.props）は LICENSING.md を指す。dotnet tool の pack は自動では同梱しないので、ここで明示する（無いと NU5030）。
+         README・ライセンス全文（AGPL・商用）・NOTICE も、パッケージの直下へ同梱する -->
+    <None Include="..\..\README.md" Pack="true" PackagePath="" Visible="false" />
+    <None Include="..\..\LICENSING.md" Pack="true" PackagePath="" Visible="false" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" Visible="false" />
+    <None Include="..\..\LICENSE-COMMERCIAL.md" Pack="true" PackagePath="" Visible="false" />
+    <None Include="..\..\NOTICE" Pack="true" PackagePath="" Visible="false" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\VehicleVision.PleasanterTools.ExtensionsMigrator.Engine\VehicleVision.PleasanterTools.ExtensionsMigrator.Engine.csproj" />
   </ItemGroup>
