@@ -15,7 +15,7 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>extensions-migrator</ToolCommandName>
     <PackageId>VehicleVision.PleasanterTools.ExtensionsMigrator</PackageId>
-    <Description>Pleasanter の拡張機能（Extended*）を、ファイルで管理する形から Extensions テーブル（Extensions API）へ移すコマンドラインツール。</Description>
+    <Description>Pleasanter の拡張機能（Extended*）を、ファイルで管理する形から Extensions テーブル（Extensions API）へ移すためのコマンドラインツール（プレビュー）。現在は、棚卸しや plan の確認など、読み取り専用のコマンドが動作します。</Description>
     <PackageTags>pleasanter;vehiclevision;extensions;migration;dotnet-tool</PackageTags>
   </PropertyGroup>
 
