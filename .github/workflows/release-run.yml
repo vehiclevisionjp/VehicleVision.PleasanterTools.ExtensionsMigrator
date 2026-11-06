@@ -1,3 +1,7 @@
+# リリースタグを作る（手動で起動する）。手順は _documents/リリース手順.md。
+# dry_run=true（既定）は版だけを検証し、タグを作らない。実際のタグ作成は master からだけ。
+# タグの push で Release ワークフロー（release.yml）が動き、GitHub Release と nuget.org へ公開する。
+# **公開した版は取り消せない**（nuget.org では削除できず、タグも付け直せない）。初回は両方の dry-run を回してから実行する。
 name: Create Release Tag
 on:
   workflow_dispatch:
