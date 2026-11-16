@@ -126,7 +126,7 @@ bot の App は使わず、取得不能の内容は文書へ補わない。
 - [Manual 用実例](../_documents/references.manual.json): 10 件。ツールは `master`、ほかは `main`
 - [Overview 用実例](../_documents/references.overview.json): 12 件。すべて `develop`
 - [Manual の .gitmodules][manual-modules]（SHA `acb51c4775aa4442abc15b2f5544248ae78bcef6`）
-- [Overview の .gitmodules][overview-modules]（SHA `f88b8613b6313c83dceedf7ef5e0dd36944e0b2f`）
+- Overview 用の共通の構成定義（`.gitmodules`、SHA `f88b8613b6313c83dceedf7ef5e0dd36944e0b2f`）
 - Overview 用実例の新規 5 件（BinaryMigrator・DatabaseConverter・DotNetClient・FeedIngest・MailIngest）は、旧 `.gitmodules` にない。
   2026-11-02 に `gh repo view` で、公開（PUBLIC）・既定ブランチ `develop` を確認して足した
 
@@ -160,6 +160,5 @@ AI 用の参照専用で CI は使わないため、ポインタ更新の PR や
 - [gh auth token](https://cli.github.com/manual/gh_auth_token)（ホストの指定と実行者の認証）
 
 [manual-modules]: https://github.com/vehiclevisionjp/VehicleVision.Pleasanter.Manual/blob/acb51c4775aa4442abc15b2f5544248ae78bcef6/.gitmodules
-[overview-modules]: https://github.com/vehiclevisionjp/VehicleVision.PleasanterTools.Overview/blob/f88b8613b6313c83dceedf7ef5e0dd36944e0b2f/.gitmodules
 [context]: https://github.com/Implem/Implem.Pleasanter/blob/1c693a1ee379a87e588232e43216400431376653/Implem.Pleasanter/Libraries/Requests/Context.cs#L497-L504
 [project]: https://github.com/Implem/Implem.Pleasanter/blob/1c693a1ee379a87e588232e43216400431376653/Implem.Pleasanter/Implem.Pleasanter.csproj#L3-L10
