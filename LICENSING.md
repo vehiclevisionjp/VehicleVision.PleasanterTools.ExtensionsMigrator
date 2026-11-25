@@ -59,7 +59,7 @@ AGPL の義務（ソースコード開示・コピーレフト）を負わずに
 - Pleasanter の派生著作物ではありません
   <!-- license:begin connection=api,config-write -->
 - Pleasanter とは **HTTP 越しに通信**します（標準 Web API など、本体が公開するもの）
-- Pleasanter の設定ファイル置き場（`App_Data/Parameters/` 配下など）へ**ファイルを書き出します**。
+- Pleasanter の設定ファイル置き場（`App_Data/Parameters/` 配下など）へ**ファイルをエクスポートします**。
   Pleasanter 本体のプログラムは呼び出しません
   <!-- license:end connection -->
   <!-- license:begin reference=on -->
